@@ -1,4 +1,4 @@
-# Toolkit_for_automated_reasoning_and_interpolation_with_ordered_resolution
+# Toolkit for automated reasoning and interpolation with ordered resolution
 
 In this bachelor thesis, we developed a toolkit for automated reasoning and interpolation
 with ordered resolution. Firstly, the theoretical aspects of propositional logic are covered
