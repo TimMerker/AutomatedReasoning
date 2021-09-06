@@ -23,4 +23,4 @@ their clause. Last but not least, Craig interpolation is a further application o
 resolution calculus. Craig interpolation returns an interpolant, which is the cause for the
 unsatisfiability of the union of two clause sets.
 
-The theoratical concepts and the further documentation of the source code is presented in thesis.pdf.
+The theoretical concepts and further documentation of the source code are presented in thesis.pdf.
