@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="com.fathzer:javaluator:3.0.3" type="repository">
+    <properties maven-id="com.fathzer:javaluator:3.0.3" />
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/fathzer/javaluator/3.0.3/javaluator-3.0.3.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
