@@ -27,8 +27,8 @@ public class Main {
         System.out.println("This toolkit provides various tests for propositional logic.\n\n" +
                 "Propositional formulas or sets of clauses can be entered.\n\n" +
                 "The input for propositional formulas must use the following syntax: \n\n" +
-                "The following representation applies to the operators:\n& (conjunktion),\n| (disjunktion),\n-> (implication),\n<-> (equivalence),\n- (negation),\n( (left parenthesis),\n) (right parenthesis)\n\n" +
-                "Atoms are defined by \n a capital letter and possibly an index::   A1 (Atom A1)\n\n" +
+                "The following representation applies to the operators:\n& (conjunction),\n| (disjunction),\n-> (implication),\n<-> (equivalence),\n- (negation),\n( (left parenthesis),\n) (right parenthesis)\n\n." +
+                "Atoms are defined by \n a capital letter and optionally an index::   A1 (Atom A1)\n\n" +
                 "For the clauses, literals are separated by a comma and enclosed in square brackets:\n   [A1,-A2,A3] (Clause with literals A1,-A2,A3)\n\n" +
                 "For the clause sets, clauses are separated by a semicolon and placed in square brackets:\n    [[A1,-A2,A3];[-A1,A2,A3];[-A1,-A2]]\n\n");
 
@@ -50,11 +50,11 @@ public class Main {
 
 
                 System.out.print("Please indicate which method you would like to use \n" +
-                        "1: Ordered resolution as a satisfiability test with model generation \n" +
+                        "1: Ordered resolution for satisfiability testing with model generation \n" +
                         "2: Redundancy test/redundancy elimination \n" +
-                        "3: Transformation of a formula to CNF/DNF/NNF  \n" +
-                        "4: Determining the polarity of a subformula of a given formula  \n" +
-                        "5: Calculation of the interpolant of two different unsatisfiable formulas\n" +
+                        "3: Transformation of a formula into CNF/DNF/NNF  \n" +
+                        "4: Determining the polarity of a subformula wrt. a given formula  \n" +
+                        "5: Generation of an interpolant for a pair of unsatisfiable formulas\n" +
                         "6: Change mode\n" +
                         "7: Exit program\n");
 
@@ -82,7 +82,7 @@ public class Main {
                             return;
                         }
                         if (cnf.equals("1")) {
-                            System.out.println("SATISFIABLE: The set of clauses is satisfiable, since Verum could be derived.");
+                            System.out.println("SATISFIABLE: The set of clauses is satisfiable, since verum could be derived.");
                             return;
                         }
                         KlauselmengeEvaluator eval2 = new KlauselmengeEvaluator();
@@ -152,8 +152,8 @@ public class Main {
 
 
                 if (test.equals("3")) {
-                    System.out.println("1: Transformation of a formula in NNF using equivalences \n" + "2: Transformation of a formula in CNF using equivalences \n" + "3: Transformation of a formula in DNF using equivalences \n"
-                            + "4: Transformation of a formula in KNF using structure preserving transformations\n");
+                    System.out.println("1: Transformation of a formula into NNF using equivalences \n" + "2: Transformation of a formula into CNF using equivalences \n" + "3: Transformation of a formula into DNF using equivalences \n"
+                            + "4: Transformation of a formula into CNF using structure preserving transformations\n");
                     String input = in.nextLine();
                     if (!(input.equals("1")) && !(input.equals("2")) && !(input.equals("3")) && !(input.equals("4"))) {
                         throw new IllegalArgumentException();
