@@ -22,20 +22,20 @@ public class Main {
 
         Scanner in = new Scanner(System.in);
 
-        System.out.println("TOOLKIT FÜR DIE AUSSAGENLOGIK MIT GEORDNETER RESOLUTION");
+        System.out.println("TOOLKIT FOR AUTOMATED REASONING AND INTERPOLATION WITH ORDERED RESOLUTION");
         System.out.println();
-        System.out.println("Dieses Toolkit bietet verschiedene Tests für die Aussagenlogik.\n\n" +
-                "Es können aussagenlogische Formeln oder Klauselmengen eingegeben werden.\n\n" +
-                "Die Eingabe für aussagenlogische Formeln muss folgende Syntax verwenden: \n\n" +
-                "Für die Operatoren gilt folgende Darstellung:\n& (Konjunktion),\n| (Disjunktion),\n-> (Implikation),\n<-> (Äquivalenz),\n- (Negation),\n( (öffnende Klammer),\n) (schließende Klammer)\n\n" +
-                "Für die Aussagenvariablen gilt eine Schreibweise bestehend aus\n einem Großbuchstaben und ggf. einem Index:   A1 (Aussagenvariable A1)\n\n" +
-                "Für die Klauseln werden Literale durch ein Komma getrennt und in eckige Klammern gestzt:\n   [A1,-A2,A3] (Klausel mit den Literalen A1,-A2,A3)\n\n" +
-                "Für die Klauselmengen werden Klauseln durch ein Semikolon getrennt und in eckige Klammern gesetzt:\n    [[A1,-A2,A3];[-A1,A2,A3];[-A1,-A2]]\n\n");
+        System.out.println("This toolkit provides various tests for propositional logic.\n\n" +
+                "Propositional formulas or sets of clauses can be entered.\n\n" +
+                "The input for propositional formulas must use the following syntax: \n\n" +
+                "The following representation applies to the operators:\n& (conjunktion),\n| (disjunktion),\n-> (implication),\n<-> (equivalence),\n- (negation),\n( (left parenthesis),\n) (right parenthesis)\n\n" +
+                "Atoms are defined by \n a capital letter and possibly an index::   A1 (Atom A1)\n\n" +
+                "For the clauses, literals are separated by a comma and enclosed in square brackets:\n   [A1,-A2,A3] (Clause with literals A1,-A2,A3)\n\n" +
+                "For the clause sets, clauses are separated by a semicolon and placed in square brackets:\n    [[A1,-A2,A3];[-A1,A2,A3];[-A1,-A2]]\n\n");
 
 
         System.out.println();
-        System.out.print("Bitte wählen Sie ob Sie den erweiterten Erklärungsmodus anwenden möchten oder nur die wichtigten Ergebnisse sehen wollen:\n\n" +
-                ("(Geben Sie E für Erklärungsmodus und R für Ergebnismodus ein): "));
+        System.out.print("Please choose whether you want to use the explanation mode or the result mode:\n\n" +
+                ("(Enter E for explanation mode and R for result mode):"));
         String modusEingabe = in.nextLine();
 
         boolean quit = false;
@@ -43,24 +43,20 @@ public class Main {
                 if (!(modusEingabe.equals("E")) && !(modusEingabe.equals("e")) && !(modusEingabe.equals("R")) && !(modusEingabe.equals("r")))
                     throw new IllegalArgumentException();
 
-                if (modusEingabe.equals("E") || modusEingabe.equals("e")) {
-                    erklaerungsmodus = true;
-                } else {
-                    erklaerungsmodus = false;
-                }
+            erklaerungsmodus = modusEingabe.equals("E") || modusEingabe.equals("e");
 
                 System.out.println();
 
 
 
-                System.out.print("Bitte geben Sie an, welches Verfahren Sie anwenden möchten \n" +
-                        "1: Geordnete Resolution als Erfüllbarkeitstest mit Modellgenerierung \n" +
-                        "2: Redundanztest/Redundanzelimination \n" +
-                        "3: Transformation einer Formel in KNF/DNF/NNF  \n" +
-                        "4: Bestimmung der Polarität einer Subformel einer gegebenen Formel  \n" +
-                        "5: Berechnung der Interpolante von zwei verschiedenen unerfüllbaren Formeln\n" +
-                        "6: Modus wechseln\n" +
-                        "7: Programm verlassen\n");
+                System.out.print("Please indicate which method you would like to use \n" +
+                        "1: Ordered resolution as a satisfiability test with model generation \n" +
+                        "2: Redundancy test/redundancy elimination \n" +
+                        "3: Transformation of a formula to CNF/DNF/NNF  \n" +
+                        "4: Determining the polarity of a subformula of a given formula  \n" +
+                        "5: Calculation of the interpolant of two different unsatisfiable formulas\n" +
+                        "6: Change mode\n" +
+                        "7: Exit program\n");
 
 
                 String test = in.nextLine();
@@ -71,28 +67,28 @@ public class Main {
                 System.out.println();
 
                 if (test.equals("1")) {
-                    System.out.print("Bitte wählen Sie die Form der Eingabe\n (F: für aussagenlogische Formel oder K: für Klauselmenge ein): \n");
+                    System.out.print("Please select the form of entry\n (F: for propositional formula or C: for set of clauses): \n");
                     String form = in.nextLine();
                     if (form.equals("F") || form.equals("f")) {
-                        System.out.print("Bitte geben Sie eine aussagenlogische Formel für den \nErfüllbarkeitstest ein: \n");
+                        System.out.print("Please enter a propositional formula \n to test satisfiability: \n");
                         String formelInput = in.nextLine();
                         TreeEvaluator eval = new TreeEvaluator();
                         TreeNode tree = eval.evaluate(formelInput);
                         String cnf = conversionToCNF.process(tree);
-                        System.out.println("Formel in KNF:" + cnf + "\n");
+                        System.out.println("Formula in KNF:" + cnf + "\n");
                         if (cnf.equals("0")) {
-                            System.out.println("UNERFÜLLBAR: Da die leere Klausel hergeleitet werden konnte, " +
-                                    "ist die Klauselmenge unerfüllbar.");
+                            System.out.println("UNSATISFIABLE: We couldn't derive the empty clause " +
+                                    "therefore the formula is unsatisfiable.");
                             return;
                         }
                         if (cnf.equals("1")) {
-                            System.out.println("ERFÜLLBAR: Die Klauselmenge ist erfüllbar, da Verum hergeleitet werden konnte.");
+                            System.out.println("SATISFIABLE: The set of clauses is satisfiable, since Verum could be derived.");
                             return;
                         }
                         KlauselmengeEvaluator eval2 = new KlauselmengeEvaluator();
                         Klauselmenge klauselmenge = eval2.evaluateFormula(cnf);
                         System.out.println(klauselmenge.toString() + "\n");
-                        System.out.print("Bitte geben Sie eine Ordnung ein: ");
+                        System.out.print("Please enter an order: ");
                         String ordnungInput = in.nextLine();
                         OrdnungEvaluator eval3 = new OrdnungEvaluator();
                         Ordnung ordnung = eval3.evaluate(ordnungInput);
@@ -100,12 +96,12 @@ public class Main {
                         Klauselmenge withoutRedundancy = resolution.redundanzEliminationOhneKonsolenausgaben(klauselmenge, ordnung);
                         resolution.geordneteResolution(ordnung, withoutRedundancy);
 
-                    } else if (form.equals("K") || form.equals("k")) {
-                        System.out.print("Bitte geben Sie eine Klauselmenge ein: ");
+                    } else if (form.equals("C") || form.equals("c")) {
+                        System.out.print("Please enter a clause set: ");
                         String formel = in.nextLine();
                         KlauselmengeEvaluator eval = new KlauselmengeEvaluator();
                         Klauselmenge klauselmenge = eval.evaluateSet(formel);
-                        System.out.print("Bitte geben Sie eine Ordnung ein: ");
+                        System.out.print("Please enter an order: ");
                         String formel2 = in.nextLine();
                         OrdnungEvaluator eval2 = new OrdnungEvaluator();
                         Ordnung ordnung = eval2.evaluate(formel2);
@@ -118,21 +114,21 @@ public class Main {
                 }
 
                 if (test.equals("2")) {
-                    System.out.println("1:  Redundanztest einer Klausel bzgl. einer Klauselmenge \n" + "2:  Redundanzelimination in einer Klauselmenge");
+                    System.out.println("1:  Redundancy test of a clause with respect to a set of clauses \n" + "2:  Redundancy elimination in a clause set");
                     String input = in.nextLine();
                     if (!(input.equals("1")) && !(input.equals("2"))) {
                         throw new IllegalArgumentException();
                     }
                     if (input.equals("1")) {
-                        System.out.print("Bitte geben Sie eine Klauselmenge ein: ");
+                        System.out.print("Please enter a clause set: ");
                         String formel = in.nextLine();
                         KlauselmengeEvaluator eval = new KlauselmengeEvaluator();
                         Klauselmenge klauselmenge = eval.evaluateSet(formel);
-                        System.out.print("Bitte geben Sie eine Ordnung ein: ");
+                        System.out.print("Please enter an order: ");
                         String formel2 = in.nextLine();
                         OrdnungEvaluator eval2 = new OrdnungEvaluator();
                         Ordnung ordnung = eval2.evaluate(formel2);
-                        System.out.println("Bitte geben Sie die auf Redundanz zu untersuchende Klausel ein: ");
+                        System.out.println("Please enter the clause to be examined for redundancy: ");
                         String formel3 = in.nextLine();
                         KlauselEvaluator eval3 = new KlauselEvaluator();
                         Klausel klausel = eval3.evaluate(formel3);
@@ -140,11 +136,11 @@ public class Main {
                         resolution.redundanztest(klausel, klauselmenge, ordnung);
                     }
                     if (input.equals("2")) {
-                        System.out.print("Bitte geben Sie eine Klauselmenge ein: ");
+                        System.out.print("Please enter a clause set: ");
                         String formel = in.nextLine();
                         KlauselmengeEvaluator eval = new KlauselmengeEvaluator();
                         Klauselmenge klauselmenge = eval.evaluateSet(formel);
-                        System.out.print("Bitte geben Sie eine Ordnung ein: ");
+                        System.out.print("Please enter an order: ");
                         String formel2 = in.nextLine();
                         OrdnungEvaluator eval2 = new OrdnungEvaluator();
                         Ordnung ordnung = eval2.evaluate(formel2);
@@ -156,14 +152,14 @@ public class Main {
 
 
                 if (test.equals("3")) {
-                    System.out.println("1: Transformation einer Formel in NNF durch Äquivalenzumformungen\n" + "2: Transformation einer Formel in KNF durch Äquivalenzumformungen\n" + "3: Transformation einer Formel in DNF durch Äquivalenzumformungen \n"
-                            + "4: Transformation einer Formel in KNF durch strukturerhaltende Umformungen\n");
+                    System.out.println("1: Transformation of a formula in NNF using equivalences \n" + "2: Transformation of a formula in CNF using equivalences \n" + "3: Transformation of a formula in DNF using equivalences \n"
+                            + "4: Transformation of a formula in KNF using structure preserving transformations\n");
                     String input = in.nextLine();
                     if (!(input.equals("1")) && !(input.equals("2")) && !(input.equals("3")) && !(input.equals("4"))) {
                         throw new IllegalArgumentException();
                     }
                     if (input.equals("1")) {
-                        System.out.print("Bitte geben Sie eine aussagenlogische Formel ein: ");
+                        System.out.print("Please enter a propositional formula: ");
                         String formel = in.nextLine();
                         TreeEvaluator eval = new TreeEvaluator();
                         TreeNode tree = eval.evaluate(formel);
@@ -173,7 +169,7 @@ public class Main {
                         System.out.println(result);
                     }
                     if (input.equals("2")) {
-                        System.out.print("Bitte geben Sie eine aussagenlogische Formel ein: ");
+                        System.out.print("Please enter a propositional formula: ");
                         String formel = in.nextLine();
                         TreeEvaluator eval = new TreeEvaluator();
                         TreeNode tree = eval.evaluate(formel);
@@ -183,7 +179,7 @@ public class Main {
                     }
 
                     if (input.equals("3")) {
-                        System.out.print("Bitte geben Sie eine aussagenlogische Formel ein: ");
+                        System.out.print("Please enter a propositional formula: ");
                         String formel = in.nextLine();
                         TreeEvaluator eval = new TreeEvaluator();
                         TreeNode tree = eval.evaluate(formel);
@@ -193,7 +189,7 @@ public class Main {
                         System.out.println(result);
                     }
                     if (input.equals("4")) {
-                        System.out.print("Bitte geben Sie eine aussagenlogische Formel ein: ");
+                        System.out.print("Please enter a propositional formula: ");
                         String formel = in.nextLine();
                         TreeEvaluator eval = new TreeEvaluator();
                         TreeNode tree = eval.evaluate(formel);
@@ -213,11 +209,11 @@ public class Main {
 
 
                 if (test.equals("4")) {
-                    System.out.print("Bitte geben Sie eine aussagenlogische Formel ein: ");
+                    System.out.print("Please enter a propositional formula: ");
                     String formel = in.nextLine();
                     TreeEvaluator eval = new TreeEvaluator();
                     TreeNode tree = eval.evaluate(formel);
-                    System.out.print("Bitte geben Sie eine Subformel in Bezug auf die aussagenlogische Formel ein: ");
+                    System.out.print("Please enter a subformula of the given propositional formula: ");
                     String sub = in.nextLine();
                     TreeNode subformula = eval.evaluate(sub);
                     String result;
@@ -226,40 +222,40 @@ public class Main {
                 }
 
                 if (test.equals("5")) {
-                    System.out.print("Bitte geben Sie die erste Formel A in Klauselmengennotation ein: ");
+                    System.out.print("Please enter the first propositional formula A in clause set notation:");
                     String formel = in.nextLine();
                     KlauselmengeEvaluator eval1 = new KlauselmengeEvaluator();
                     Klauselmenge klauselmenge1 = eval1.evaluateSet(formel);
-                    System.out.print("Bitte geben Sie die zweite Formel B in Klauselmengennotation ein: ");
+                    System.out.print("Please enter the second propositional formula B in clause set notation: ");
                     String formel2 = in.nextLine();
                     KlauselmengeEvaluator eval2 = new KlauselmengeEvaluator();
                     Klauselmenge klauselmenge2 = eval2.evaluateSet(formel2);
 
-                    System.out.print("Soll die Ordnung automatisch erstellt werden? (Geben Sie J für ja oder N für nein ein): ");
+                    System.out.print("Should the order be created automatically? (Enter Y for yes or N for no): ");
                     String automatisiert = in.nextLine();
 
-                    if (!(automatisiert.equals("J")) && !(automatisiert.equals("j")) && !(automatisiert.equals("N")) && !(automatisiert.equals("n")))
+                    if (!(automatisiert.equals("Y")) && !(automatisiert.equals("y")) && !(automatisiert.equals("N")) && !(automatisiert.equals("n")))
                         throw new IllegalArgumentException();
 
                     Ordnung pureOrdnungA = new Ordnung(new LinkedList<>());
                     Ordnung ordnungCommon = new Ordnung(new LinkedList<>());
                     Ordnung pureOrdnungB = new Ordnung(new LinkedList<>());
 
-                    if (automatisiert.equals("J") || automatisiert.equals("j")) {
+                    if (automatisiert.equals("Y") || automatisiert.equals("y")) {
                         pureOrdnungA = Ordnung.pureOrdnung(klauselmenge1, klauselmenge2);
                         ordnungCommon = Ordnung.commonOrdnung(klauselmenge1, klauselmenge2);
                         pureOrdnungB = Ordnung.pureOrdnung(klauselmenge2, klauselmenge1);
                     }
                     if (automatisiert.equals("N") || automatisiert.equals("n")) {
-                        System.out.println("Geben Sie die Variablen an die in Formel A UND NICHT in Formel B auftauchen: ");
+                        System.out.println("Please enter the variables that appear in formula A AND NOT in formula B: ");
                         String ordnung = in.nextLine();
                         OrdnungEvaluator eval3 = new OrdnungEvaluator();
                         pureOrdnungA = eval3.evaluate(ordnung);
-                        System.out.println("Geben Sie die Variablen an die in Formel A UND Formel B auftauchen: ");
+                        System.out.println("Please enter the variables that appear in formula A AND formula B: ");
                         String ordnung2 = in.nextLine();
                         OrdnungEvaluator eval4 = new OrdnungEvaluator();
                         ordnungCommon = eval4.evaluate(ordnung2);
-                        System.out.println("Geben Sie die Variablen an die NICHT in Formel A ABER in Formel B auftauchen: ");
+                        System.out.println("Enter the variables that do NOT appear in formula A BUT appear in formula B: ");
                         String ordnung3 = in.nextLine();
                         OrdnungEvaluator eval5 = new OrdnungEvaluator();
                         pureOrdnungB = eval5.evaluate(ordnung3);
@@ -271,24 +267,20 @@ public class Main {
 
                 }
                 if (test.equals("6")) {
-                    System.out.println("Gehe zurück zum Hauptmenü...\n");
-                    System.out.println("Sie können den Modus jetzt wechseln.\n");
-                    System.out.print("Bitte wählen Sie ob Sie den erweiterten Erklärungsmodus anwenden möchten oder nur die wichtigten Ergebnisse sehen wollen:\n\n" +
-                            ("(Geben Sie E für Erklärungsmodus und R für Ergebnismodus ein): "));
+                    System.out.println("Returning to main menu......\n");
+                    System.out.println("You can switch modes now.\n");
+                    System.out.print("Please choose whether you want to use the explanation mode or the result mode:\n\n" +
+                            ("(Enter E for explanation mode and R for result mode): "));
                     modusEingabe = in.nextLine();
                     if (!(modusEingabe.equals("E")) && !(modusEingabe.equals("e")) && !(modusEingabe.equals("R")) && !(modusEingabe.equals("r")))
                         throw new IllegalArgumentException();
-                    if (modusEingabe.equals("E") || modusEingabe.equals("e")) {
-                        erklaerungsmodus = true;
-                    } else {
-                        erklaerungsmodus = false;
-                    }
+                    erklaerungsmodus = modusEingabe.equals("E") || modusEingabe.equals("e");
                     System.out.println();
                 }
                 if (test.equals("7")) {
-                    System.out.println("Beende die Applikation...\n");
-                    System.out.println("Applikation geschlossen.\n");
-                    System.out.println("Vielen Dank und noch einen schönen Tag!\n");
+                    System.out.println("Quitting...\n");
+                    System.out.println("Application closed.\n");
+                    System.out.println("Thank you and have a nice day!\n");
                     quit = true;
                 }
             }
