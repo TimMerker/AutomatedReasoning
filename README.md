@@ -1,6 +1,6 @@
 # Toolkit for automated reasoning and interpolation with ordered resolution
 
-In this bachelor thesis, we developed a toolkit for automated reasoning and interpolation
+In this bachelor thesis, I developed a toolkit for automated reasoning and interpolation
 with ordered resolution. Firstly, the theoretical aspects of propositional logic are covered
 in the preliminaries section, including syntax and semantics, the transformation of formulae
 in conjunctive and disjunctive normal form, the ordered resolution calculus with
